@@ -10,11 +10,13 @@ import org.springframework.context.annotation.Profile;
 
 import com.exercicio.course.entities.Category;
 import com.exercicio.course.entities.Order;
+import com.exercicio.course.entities.Post;
 import com.exercicio.course.entities.Product;
 import com.exercicio.course.entities.User;
 import com.exercicio.course.entities.enums.OrderStatus;
 import com.exercicio.course.repositories.CategoryRepository;
 import com.exercicio.course.repositories.OrderRepository;
+import com.exercicio.course.repositories.PostRepository;
 import com.exercicio.course.repositories.ProductRepository;
 import com.exercicio.course.repositories.UserRepository;
 
@@ -33,6 +35,9 @@ public class TestConfig implements CommandLineRunner{
 	
 	@Autowired
 	private ProductRepository productRepository;
+	
+	@Autowired
+	private PostRepository postRepository;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -66,7 +71,25 @@ public class TestConfig implements CommandLineRunner{
 		Product prod4 = new Product(null, "PC Gamer", "Intel i9 , 16Gb de Ram e 1Tb de disco duro", 9999.9, "");
 		productRepository.saveAll(Arrays.asList(prod1, prod2, prod3, prod4));
 		
+		//Isntanciando Posts:
+		Post post1 = new Post(null, "Teste", "Teste", Instant.parse("2019-07-22T19:53:07Z"), u1);
+		Post post2 = new Post(null, "Teste", "Teste", Instant.parse("2019-07-22T19:53:07Z"), u2);
+		postRepository.saveAll(Arrays.asList(post1, post2));
 		
+		//Relacionando os produtos e as categorias
+		prod1.getCategories().add(cat2);
+		prod2.getCategories().add(cat1);
+		prod2.getCategories().add(cat3);
+		prod4.getCategories().add(cat3);
+		prod4.getCategories().add(cat2);
+		prod3.getCategories().add(cat3);
+		
+		//Salvando as Relacoes - ocorre quando salvamos uma vez mais os produtos no banco de dados.
+		productRepository.saveAll(Arrays.asList(prod1, prod2, prod3, prod4));
 	} 
 
 }
+
+//Links de Suporte
+//http://localhost:8080/users
+//http://localhost:8080/h2-console

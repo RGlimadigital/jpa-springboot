@@ -31,6 +31,11 @@ public class User implements Serializable {
 	@OneToMany(mappedBy = "client")
 	private List<Order> orders = new ArrayList<>();
 	
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "author")
+	private List<Post> posts = new ArrayList<>();
+	
 	public User() {
 		
 	}
@@ -67,6 +72,10 @@ public class User implements Serializable {
 
 	public List<Order> getOrders() {
 		return orders;
+	}
+	
+	public List<Post> getPosts(){
+		return posts;
 	}
 
 	public void setEmail(String email) {
