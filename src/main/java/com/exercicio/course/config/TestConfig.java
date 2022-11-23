@@ -10,11 +10,13 @@ import org.springframework.context.annotation.Profile;
 
 import com.exercicio.course.entities.Category;
 import com.exercicio.course.entities.Order;
+import com.exercicio.course.entities.OrderItem;
 import com.exercicio.course.entities.Post;
 import com.exercicio.course.entities.Product;
 import com.exercicio.course.entities.User;
 import com.exercicio.course.entities.enums.OrderStatus;
 import com.exercicio.course.repositories.CategoryRepository;
+import com.exercicio.course.repositories.OrderItemRepository;
 import com.exercicio.course.repositories.OrderRepository;
 import com.exercicio.course.repositories.PostRepository;
 import com.exercicio.course.repositories.ProductRepository;
@@ -38,6 +40,9 @@ public class TestConfig implements CommandLineRunner{
 	
 	@Autowired
 	private PostRepository postRepository;
+	
+	@Autowired
+	private OrderItemRepository orderItemRepository;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -86,6 +91,16 @@ public class TestConfig implements CommandLineRunner{
 		
 		//Salvando as Relacoes - ocorre quando salvamos uma vez mais os produtos no banco de dados.
 		productRepository.saveAll(Arrays.asList(prod1, prod2, prod3, prod4));
+		
+		
+		//Seed do OrderItem.
+		OrderItem oi1 = new OrderItem(o1, prod1, 2, prod1.getPrice());
+		OrderItem oi2 = new OrderItem(o1, prod3, 1, prod3.getPrice());
+		OrderItem oi3 = new OrderItem(o2, prod3, 2, prod3.getPrice());
+		OrderItem oi4 = new OrderItem(o3, prod4, 3, prod4.getPrice());
+		
+		orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
+		
 	} 
 
 }

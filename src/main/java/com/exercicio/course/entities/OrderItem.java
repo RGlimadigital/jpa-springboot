@@ -2,13 +2,24 @@ package com.exercicio.course.entities;
 
 import java.io.Serializable;
 
-import com.exercicio.course.entities.pk.OrderItemPk;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
+import com.exercicio.course.entities.pk.OrderItemPk;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
+@Entity
+@Table(name = "tb_order_item")
 public class OrderItem implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-
-	private OrderItemPk id;
+	
+	
+	//Temos que instanciar a classe auxiliar.
+	@EmbeddedId
+	private OrderItemPk id = new OrderItemPk();
 	
 	private Integer quantity;
 	private Double price;
@@ -26,7 +37,7 @@ public class OrderItem implements Serializable {
 		this.price = price;
 	}
 
-	
+	@JsonIgnore
 	public Order getOrder() {
 		return id.getOrder();
 	}
