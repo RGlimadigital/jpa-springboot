@@ -100,6 +100,9 @@ public class TestConfig implements CommandLineRunner{
 		OrderItem oi4 = new OrderItem(o3, prod4, 3, prod4.getPrice());
 		
 		orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
+		System.out.println(oi1.totalValue());
+		
+		
 		
 	} 
 
