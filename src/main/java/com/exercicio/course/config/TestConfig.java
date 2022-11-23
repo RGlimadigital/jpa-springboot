@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Profile;
 import com.exercicio.course.entities.Category;
 import com.exercicio.course.entities.Order;
 import com.exercicio.course.entities.OrderItem;
+import com.exercicio.course.entities.Payment;
 import com.exercicio.course.entities.Post;
 import com.exercicio.course.entities.Product;
 import com.exercicio.course.entities.User;
@@ -56,7 +57,7 @@ public class TestConfig implements CommandLineRunner{
 		userRepository.saveAll(Arrays.asList(u1, u2, u3, u4));
 		
 		//Orders - data formato ISO8601
-		Order o1 = new Order(null, Instant.parse("2019-06-20T19:53:07Z"),OrderStatus.WAITTING_PAYMENT, u1);
+		Order o1 = new Order(null, Instant.parse("2019-06-20T19:53:07Z"),OrderStatus.PAID, u1);
 		Order o2 = new Order(null, Instant.parse("2019-07-21T03:53:07Z"),OrderStatus.PAID, u2);
 		Order o3 = new Order(null, Instant.parse("2019-07-22T19:53:07Z"),OrderStatus.SHIPPED, u1);
 		
@@ -100,7 +101,19 @@ public class TestConfig implements CommandLineRunner{
 		OrderItem oi4 = new OrderItem(o3, prod4, 3, prod4.getPrice());
 		
 		orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
-		System.out.println(oi1.totalValue());
+		
+		Payment pay1 = new Payment(null, Instant.parse("2019-07-21T21:53:07Z"), o2);
+		Payment pay2 = new Payment(null, Instant.parse("2019-07-21T21:53:07Z"), o1);
+		
+		o2.setPayment(pay1);
+		o1.setPayment(pay2);
+		
+		orderRepository.save(o2);
+		orderRepository.save(o1);
+		
+		
+		
+//		System.out.println(oi1.totalValue());
 		
 		
 		
