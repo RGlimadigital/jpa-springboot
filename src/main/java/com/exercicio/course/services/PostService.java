@@ -32,4 +32,15 @@ public class PostService {
 	public void delete(Long id) {
 		repository.deleteById(id);
 	}
+	
+	public Post update(Long id, Post obj ) {
+		Post entity = repository.getReferenceById(id);
+		updatePost(entity, obj);
+		return repository.save(entity);
+	}
+	
+	public void updatePost(Post entity, Post obj) {
+		entity.setTitle(obj.getTitle());
+		entity.setContent(obj.getContent());
+	}
 }
